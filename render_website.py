@@ -2,6 +2,7 @@ import json
 import os
 import sys
 
+from livereload import Server
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 
@@ -27,6 +28,13 @@ def render_pagination(templates_path: str, template: str, destination_path: str,
         file.write(pagination)
 
 
+def run_server(templates_path, pagination_template, rendered_files_path, book_info):
+    render_pagination(templates_path, pagination_template, rendered_files_path, book_info)
+    server = Server()
+    server.watch('templates/*.html', render_pagination(templates_path, pagination_template, rendered_files_path, book_info))
+    server.serve(root=rendered_files_path)
+
+
 if __name__ == '__main__':
     root_path = os.path.abspath(os.path.dirname(__file__))
     books_storage_root_path = os.path.join(root_path, 'books_storage')
@@ -45,4 +53,4 @@ if __name__ == '__main__':
     if not book_info:
         sys.exit(1)
 
-    render_pagination(templates_path, pagination_template, rendered_files_path, book_info)
+    run_server(templates_path, pagination_template, rendered_files_path, book_info)

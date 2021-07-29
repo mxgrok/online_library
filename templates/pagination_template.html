@@ -23,10 +23,12 @@
                     <p class="card-text">
                       {% for category in book.genres %}
                         <span class="badge badge-light">{{category}}</span>
+
                       {% endfor %}
                     </p>
                     <p class="card-text">
-                      <small class="text-muted"><a href="{{book.book_path}}" target="_blank">Читать</a></small>
+                      <small class="text-muted"><a href="{{book.book_path}}" target="_blank">Читать</a>
+                      </small>
                     </p>
                   </div>
                 </div>
